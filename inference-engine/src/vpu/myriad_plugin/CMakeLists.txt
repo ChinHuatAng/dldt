@@ -36,3 +36,5 @@ endif()
 target_link_libraries(${TARGET_NAME}
     PRIVATE
         ${INTEL_ITT_LIBS} inference_engine vpu_graph_transformer mvnc)
+
+install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

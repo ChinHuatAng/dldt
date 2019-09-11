@@ -110,8 +110,11 @@ if(WIN32)
 endif()
 
 # Properties->C/C++->General->Additional Include Directories
-target_include_directories(${TARGET_NAME} PUBLIC ${PUBLIC_HEADERS_DIR}
-                                          PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(${TARGET_NAME} PUBLIC
+                                          $<BUILD_INTERFACE:${IE_MAIN_SOURCE_DIR}/include>
+                                          $<INSTALL_INTERFACE:include/${TARGET_NAME}>
+                                          PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
+                                                  "${IE_MAIN_SOURCE_DIR}/src/dumper")
 
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${IE_MAIN_SOURCE_DIR}/thirdparty/pugixml/src")
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${IE_MAIN_SOURCE_DIR}/thirdparty/ngraph/src")
@@ -137,7 +140,9 @@ add_library(${TARGET_NAME}_s STATIC
 set_ie_threading_interface_for(${TARGET_NAME}_s)
 
 # Properties->C/C++->General->Additional Include Directories
-target_include_directories(${TARGET_NAME}_s PUBLIC  "${PUBLIC_HEADERS_DIR}"
+target_include_directories(${TARGET_NAME}_s PUBLIC
+                                            $<BUILD_INTERFACE:${IE_MAIN_SOURCE_DIR}/include>
+                                            $<INSTALL_INTERFACE:include/${TARGET_NAME}>
                                             PUBLIC  "${CMAKE_CURRENT_SOURCE_DIR}"
                                             PRIVATE "${IE_MAIN_SOURCE_DIR}/src/dumper")
 
@@ -173,7 +178,8 @@ target_link_libraries(${TARGET_NAME}_s PRIVATE fluid
 add_cpplint_target(${TARGET_NAME}_cpplint FOR_TARGETS ${TARGET_NAME})
 
 ie_register_plugins(MAIN_TARGET ${TARGET_NAME}
-                    POSSIBLE_PLUGINS MultiDevicePlugin HeteroPlugin clDNNPlugin dliaPlugin GNAPlugin MKLDNNPlugin myriadPlugin HDDLPlugin)
+                    P  $<BUILD_INTERFACE:${IE_MAIN_SOURCE_DIR}/include>
++                                          $<INSTALL_INTERFACE:include/${TARGET_NAME}>OSSIBLE_PLUGINS clDNNPlugin dliaPlugin GNAPlugin MKLDNNPlugin myriadPlugin)
 
 # export targets
 export(TARGETS ${TARGET_NAME} NAMESPACE IE:: FILE "${CMAKE_BINARY_DIR}/targets.cmake")
@@ -204,3 +210,14 @@ configure_file(
     "${CMAKE_SOURCE_DIR}/cmake/share/InferenceEngineConfig-version.cmake.in"
     "${CMAKE_BINARY_DIR}/InferenceEngineDeveloperPackageConfig-version.cmake"
     COPYONLY)
+
+set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/InferenceEngine)
+install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(EXPORT ${TARGET_NAME} DESTINATION ${ConfigPackageLocation} NAMESPACE IE:: FILE targets.cmake)
+install(DIRECTORY ${PUBLIC_HEADERS_DIR}/ DESTINATION include/${TARGET_NAME} FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
+install(FILES
+    "${CMAKE_BINARY_DIR}/InferenceEngineConfig.cmake"
+    "${CMAKE_BINARY_DIR}/InferenceEngineConfig-version.cmake"
+    DESTINATION ${ConfigPackageLocation})
+
+install(FILES "$<TARGET_FILE_DIR:${TARGET_NAME}>/plugins.xml" DESTINATION /usr/share/openvino/inference-engine)

@@ -69,3 +69,4 @@ target_compile_definitions(test_${TARGET_NAME} PUBLIC -DMKLDNN_THR=${MKLDNN_THR}
 target_link_libraries(test_${TARGET_NAME} PRIVATE inference_engine_s mkldnn)
 
 set_target_properties(test_${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME test_${TARGET_NAME})
+install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

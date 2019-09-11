@@ -122,3 +122,5 @@ add_test(NAME ${TARGET_NAME}
         COMMAND ${TARGET_NAME})
 
 add_dependencies(${TARGET_NAME} mock_engine)
+
+install(TARGETS ${TARGET_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR})

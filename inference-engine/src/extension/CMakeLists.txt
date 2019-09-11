@@ -49,7 +49,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "cpu_extension")
 
 target_link_libraries(${TARGET_NAME} PRIVATE ${InferenceEngine_LIBRARIES})
 
-target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${TARGET_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME ${TARGET_NAME})
 
 set_target_cpu_flags(${TARGET_NAME})
@@ -61,3 +61,6 @@ if (IE_MAIN_SOURCE_DIR)
     export(TARGETS ${TARGET_NAME} NAMESPACE IE:: APPEND FILE "${CMAKE_BINARY_DIR}/targets_developer.cmake")
 endif()
 
+set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/InferenceEngine)
+install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(EXPORT ${TARGET_NAME} DESTINATION ${ConfigPackageLocation} NAMESPACE IE:: FILE targets_cpu_extension.cmake)

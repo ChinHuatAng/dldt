@@ -70,3 +70,5 @@ if (ENABLE_PYTHON)
 endif()
 
 add_cpplint_report_target()
+
+install(DIRECTORY samples DESTINATION share/doc/inference_engine)
