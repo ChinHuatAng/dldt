@@ -62,6 +62,10 @@ add_cpplint_target(sample_cpplint
     EXCLUDE_PATTERNS "thirdparty/*" "pugixml/*")
 
 if (ENABLE_PYTHON)
+    set(InferenceEngine_DIR "${CMAKE_BINARY_DIR}")
+
+    #to be able to link
+    set (LIB_FOLDER ${IE_MAIN_SOURCE_DIR}/${BIN_FOLDER}/${CMAKE_BUILD_TYPE}/lib)
     add_subdirectory(ie_bridges/python)
 endif()
 

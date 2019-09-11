@@ -51,11 +51,11 @@ if (THREADING STREQUAL "OMP")
                 ENVIRONMENT "OMP"
                 VERSION_REGEX ".*_([a-z]*_([a-z0-9]+\\.)*[0-9]+).*")
     elseif(LINUX)
-        RESOLVE_DEPENDENCY(OMP
-                ARCHIVE_LIN "iomp.tgz"
-                TARGET_PATH "${TEMP}/omp"
-                ENVIRONMENT "OMP"
-                VERSION_REGEX ".*_([a-z]*_([a-z0-9]+\\.)*[0-9]+).*")
+        #RESOLVE_DEPENDENCY(OMP
+        #        ARCHIVE_LIN "iomp.tgz"
+        #        TARGET_PATH "${TEMP}/omp"
+        #        ENVIRONMENT "OMP"
+        #        VERSION_REGEX ".*_([a-z]*_([a-z0-9]+\\.)*[0-9]+).*")
     else(APPLE)
         RESOLVE_DEPENDENCY(OMP
                 ARCHIVE_MAC "iomp_20190130_mac.tgz"
@@ -63,8 +63,10 @@ if (THREADING STREQUAL "OMP")
                 ENVIRONMENT "OMP"
                 VERSION_REGEX ".*_([a-z]*_([a-z0-9]+\\.)*[0-9]+).*")
     endif()
-    log_rpath_from_dir(OMP "${OMP}/lib")
-    debug_message(STATUS "intel_omp=" ${OMP})
+    if (NOT LINUX)
+        log_rpath_from_dir(OMP "${OMP}/lib")
+        debug_message(STATUS "intel_omp=" ${OMP})
+    endif ()
 endif ()
 
 ## TBB package
@@ -77,10 +79,10 @@ if (THREADING STREQUAL "TBB" OR THREADING STREQUAL "TBB_AUTO")
                 ENVIRONMENT "TBBROOT"
                 VERSION_REGEX ".*_([a-z]*_([a-z0-9]+\\.)*[0-9]+).*")
     elseif(LINUX)
-        RESOLVE_DEPENDENCY(TBB
-                ARCHIVE_LIN "tbb2019_20181010_lin.tgz"
-                TARGET_PATH "${TEMP}/tbb"
-                ENVIRONMENT "TBBROOT")
+        #RESOLVE_DEPENDENCY(TBB
+        #        ARCHIVE_LIN "tbb2019_20181010_lin.tgz"
+        #        TARGET_PATH "${TEMP}/tbb"
+        #        ENVIRONMENT "TBBROOT")
     else(APPLE)
         RESOLVE_DEPENDENCY(TBB
                 ARCHIVE_MAC "tbb2019_20190414_v1_mac.tgz"
@@ -88,8 +90,10 @@ if (THREADING STREQUAL "TBB" OR THREADING STREQUAL "TBB_AUTO")
                 ENVIRONMENT "TBBROOT"
                 VERSION_REGEX ".*_([a-z]*_([a-z0-9]+\\.)*[0-9]+).*")
     endif()
-    log_rpath_from_dir(TBB "${TBB}/lib")
-    debug_message(STATUS "tbb=" ${TBB})
+    if (NOT LINUX)
+        log_rpath_from_dir(TBB "${TBB}/lib")
+        debug_message(STATUS "tbb=" ${TBB})
+    endif ()
 endif ()
 
 if (ENABLE_OPENCV)

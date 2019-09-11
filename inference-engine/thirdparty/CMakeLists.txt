@@ -35,21 +35,12 @@ function(build_with_lto)
         set(CMAKE_RANLIB "gcc-ranlib")
     endif()
 
-    add_subdirectory(pugixml)
-    export(TARGETS pugixml NAMESPACE IE:: APPEND FILE "${CMAKE_BINARY_DIR}/targets.cmake")
-    export(TARGETS pugixml NAMESPACE IE:: APPEND FILE "${CMAKE_BINARY_DIR}/targets_developer.cmake")
-
     if (TARGET pugixml_mt)
         export(TARGETS pugixml_mt NAMESPACE IE:: APPEND FILE "${CMAKE_BINARY_DIR}/targets.cmake")
         export(TARGETS pugixml_mt NAMESPACE IE:: APPEND FILE "${CMAKE_BINARY_DIR}/targets_developer.cmake")
     endif()
 
     add_subdirectory(stb_lib)
-
-    add_subdirectory(ade)
-    export(TARGETS ade NAMESPACE IE:: APPEND FILE "${CMAKE_BINARY_DIR}/targets_developer.cmake")
-
-    include(ngraph.cmake)
 
     add_subdirectory(fluid/modules/gapi)
     export(TARGETS fluid NAMESPACE IE:: APPEND FILE "${CMAKE_BINARY_DIR}/targets_developer.cmake")

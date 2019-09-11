@@ -91,8 +91,6 @@ set (GFLAGS_IS_SUBPROJECT TRUE)
 set (HAVE_SYS_STAT_H 1)
 set (HAVE_INTTYPES_H 1)
 
-add_subdirectory(thirdparty/gflags)
-
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 endif()
