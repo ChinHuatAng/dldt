@@ -83,7 +83,8 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${IE_MAIN_SOURCE_DIR}/src/extension
         ${IE_MAIN_SOURCE_DIR}/src/extension/common
         ${IE_MAIN_SOURCE_DIR}/thirdparty/ngraph/src
-        "${CMAKE_CURRENT_SOURCE_DIR}/mocks")
+        "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
+        ${NGRAPH_INCLUDES})
 
 set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME ${TARGET_NAME})
 

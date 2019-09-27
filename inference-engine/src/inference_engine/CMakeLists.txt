@@ -119,7 +119,7 @@ target_include_directories(${TARGET_NAME} PUBLIC
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${IE_MAIN_SOURCE_DIR}/thirdparty/pugixml/src")
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${IE_MAIN_SOURCE_DIR}/thirdparty/ngraph/src")
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${IE_MAIN_SOURCE_DIR}/thirdparty/ocv")
-include_directories(${TARGET_NAME} "/usr/include/ngraph")
+include_directories(${TARGET_NAME} "${NGRAPH_INCLUDES}")
 
 if(ENABLE_MKL_DNN)
     target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${IE_MAIN_SOURCE_DIR}/thirdparty/mkl-dnn/src/cpu/xbyak")
