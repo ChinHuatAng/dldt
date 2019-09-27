@@ -24,7 +24,6 @@ endif()
 if (WIN32)
     # add_compile_options("/WX")
 else()
-    add_compile_options("-Werror")
 endif()
 
 if (ENABLE_OPENCV)

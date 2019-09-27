@@ -760,8 +760,6 @@ foreach(__CLDNN_CompilerFlagName IN ITEMS "CMAKE_CXX_FLAGS" "CMAKE_C_FLAGS")
         MultiProcessorCompilation
         DeadCodeEliminate
         ExtensionsEnabled
-        TreatWarnAsErrorEnabled
-        WarnLevel4
         NoFastMath
         StackProtector
     )
