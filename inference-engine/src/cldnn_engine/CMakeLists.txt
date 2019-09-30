@@ -23,6 +23,8 @@ target_include_directories(${TARGET_NAME} PRIVATE
         ${IE_MAIN_SOURCE_DIR}/src/inference_engine
         ${IE_MAIN_SOURCE_DIR}/thirdparty/pugixml/src)
 
+install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
 # copy default global xml file describing the custom kernels and the *.cl files
 
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
